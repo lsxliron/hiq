@@ -6,10 +6,14 @@ def main():
 	print str(b)
 
 	a=get_list_of_possible_moves(b)
-	for t in a:
-		print str(t)
+	# for t in a:
+		# print str(t)
 
-	print "total: {t}".format(t=len(a))
+	# print "total: {t}".format(t=len(a))
+
+	m = Move(10,17,24)
+	b.play_move(m)
+	print str(b)
 
 
 def get_list_of_possible_moves(board):
@@ -27,11 +31,11 @@ def get_list_of_possible_moves(board):
 					if board.grid[i][j+1] != -1:
 						if board.grid[i][j+2] != -1:
 							#Create 2 moves (forward and backward)
-							moves.append(move((board.length*i) + j,
+							moves.append(Move((board.length*i) + j,
 											  (board.length*i) + j+1,
 											  (board.length*i) + j+2))
 							
-							moves.append(move((board.length*i) + j+2,
+							moves.append(Move((board.length*i) + j+2,
 											  (board.length*i) + j+1,
 											  (board.length*i) + j))
 
@@ -41,11 +45,11 @@ def get_list_of_possible_moves(board):
 					if board.grid[i+1][j] != -1:
 						if board.grid[i+2][j] != -1:
 							#Create 2 moves (top down and bottom up)
-							moves.append(move((i * board.length) + j,
+							moves.append(Move((i * board.length) + j,
 											  (i * board.length) + j + board.length,
 											  (i * board.length) + j + 2*board.length))
 
-							moves.append(move((i * board.length) + j + (2*board.length),
+							moves.append(Move((i * board.length) + j + (2*board.length),
 											  (i * board.length) + j + board.length,
 											  (i * board.length) + j))
 	return moves
@@ -56,9 +60,7 @@ def get_list_of_possible_moves(board):
 
 
 
-
-
-class move(object):
+class Move(object):
 	"""
 	This class represents a move on a solitare board. 
 	A move consists of 3 consecutive squares (horizonatl or vertical)
@@ -130,17 +132,45 @@ class Board(object):
 		"""
 		Checks boards equality
 		"""
-		if self.length != other.length or 
-		   self.width != other.width:
+		if self.length != other.length or self.width != other.width:
 		   return False
 
-		  #Check elements
-		  for i in range(0,self.length):
-		  	for j in range(0, self.width):
+		 #Check elements
+		for i in range(0,self.length):
+			for j in range(0, self.width):
 		  		if (self.grid[i][j] != other.grid[i][j]):
 		  			return False
 
 		  	return True
+
+	def play_move(self, mv):
+		"""
+		Change the board according to the move and return true.
+		If the move is invalid, return false
+		"""
+
+		#Get the move position route
+		i_start = mv.s1 / self.length
+		j_start = mv.s1 - (i_start * self.width)
+
+		i_middle = mv.s2 / self.length
+		j_middle = mv.s2 - (i_middle * self.width)
+
+		i_end = mv.s3 / self.length
+		j_end = mv.s3 - (i_end * self.width)
+
+		#check if move is valid
+		if self.grid[i_start][j_start] == 1:
+			if self.grid[i_middle][j_middle] == 1:
+				if self.grid[i_end][j_end] == 0:
+					#perform move
+					self.grid[i_start][j_start] = 0
+					self.grid[i_middle][j_middle] = 0
+					self.grid[i_end][j_end] = 1
+					return True
+		print "INVALID MOVE!"
+		return False
+
 
 
 
