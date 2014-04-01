@@ -1,19 +1,24 @@
-import sys
 import pdb
+from hashlib import md5
+import sys
+sys.setrecursionlimit(10000)
 
 def main():
 	b = Board(7,7)
 	print str(b)
 
 	a=get_list_of_possible_moves(b)
+	moves_list = list()
+	ht = dict()
+	moves_list = solve(b,a, moves_list,ht)
 	# for t in a:
 		# print str(t)
 
 	# print "total: {t}".format(t=len(a))
 
-	m = Move(10,17,24)
-	b.play_move(m)
-	print str(b)
+	# m = Move(10,17,24)
+	# b.play_move(m)
+	# print str(b)
 
 
 def get_list_of_possible_moves(board):
@@ -59,6 +64,52 @@ def get_list_of_possible_moves(board):
 
 
 
+def final_state(board):
+	"""
+	Returns true if there is only one peg on the board or false otherwise
+	"""
+	if (sum(item.count(1) for item in board.grid)) == 1:
+		return True
+	return False
+
+
+
+def solve(brd, valid_moves, moves_list, hash_t):
+	counter = 0
+	
+	while counter<len(valid_moves):
+
+		if (final_state(brd)):
+			print "YYYYYEEEEEESSSSS"
+			return moves_list
+
+		#Play the next move
+		next_move_valid = brd.play_move(valid_moves[counter])
+		
+		if not hash_t.has_key(md5(str(brd))):
+			if next_move_valid:
+				moves_list.append(valid_moves[counter])
+				counter = -1
+
+		else:
+			#counter == len(valid_moves):
+			counter = 0
+			hash_t[md5(str(brd))] = brd
+			brd.undo_move(moves_list[len(moves_list)-1])
+			moves_list.pop()
+
+		counter+=1
+
+
+	return False
+
+
+
+
+
+
+
+
 
 class Move(object):
 	"""
@@ -98,15 +149,24 @@ class Board(object):
 		self.width = width
 		self.grid= list()
 		#Generate grid
-		for i in range(0,2):
-			self.grid.append([-1,-1, 1, 1, 1, -1, -1])
+		# for i in range(0,2):
+		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
 
-		self.grid.append([1, 1, 1, 1, 1, 1, 1])
-		self.grid.append([1, 1, 1, 0, 1, 1, 1])
-		self.grid.append([1, 1, 1, 1, 1, 1, 1])
+		# self.grid.append([1, 1, 1, 1, 1, 1, 1])
+		# self.grid.append([1, 1, 1, 0, 1, 1, 1])
+		# self.grid.append([1, 1, 1, 1, 1, 1, 1])
 
-		for i in range(0,2):
-			self.grid.append([-1,-1, 1, 1, 1, -1, -1])
+		# for i in range(0,2):
+		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
+
+		"""(2 3 4 9 10 14 15 16 17 19)"""
+		self.grid.append([-1, -1, 1, 1, 1, -1, -1])
+		self.grid.append([-1, -1, 0, 1, 0, -1, -1])
+		self.grid.append([1, 1, 1, 1, 0, 1, 0])
+		self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
 
 				
 
@@ -168,8 +228,34 @@ class Board(object):
 					self.grid[i_middle][j_middle] = 0
 					self.grid[i_end][j_end] = 1
 					return True
-		print "INVALID MOVE!"
+		
 		return False
+
+	def undo_move(self, mv):
+		#Get the move position route
+		i_start = mv.s1 / self.length
+		j_start = mv.s1 - (i_start * self.width)
+
+		i_middle = mv.s2 / self.length
+		j_middle = mv.s2 - (i_middle * self.width)
+
+		i_end = mv.s3 / self.length
+		j_end = mv.s3 - (i_end * self.width)
+
+		if self.grid[i_start][j_start] == 0:
+			self.grid[i_start][j_start] = 1
+		else:
+			self.grid[i_start][j_start] = 0;
+
+		if self.grid[i_middle][j_middle] == 0:
+			self.grid[i_middle][j_middle] = 1
+		else:
+			self.grid[i_middle][j_middle] = 0;
+
+		if self.grid[i_end][j_end] == 0:
+			self.grid[i_end][j_end] = 1
+		else:
+			self.grid[i_end][j_end] = 0;
 
 
 
