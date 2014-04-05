@@ -7,19 +7,10 @@ import datetime
 
 def main():
 	b = Board(7,7)
-	print str(b)
-
-	a=get_list_of_possible_moves(b)
-	
+	print str(b)	
 	moves_list = solve(b)
-	# for t in a:
-		# print str(t)
-
-	# print "total: {t}".format(t=len(a))
-
-	# m = Move(10,17,24)
-	# b.play_move(m)
-	# print str(b)
+	for item in moves_list:
+		print item
 
 
 def get_list_of_possible_moves(board):
@@ -79,6 +70,9 @@ def get_num_of_pegs(board, num):
 
 
 def hash(brd, mv):
+	""" 
+	Returns a md5 string constructed from the board and the next move string
+	"""
 	return md5(str(brd) + str(mv)).hexdigest()
 
 def get_valid_moves(brd):
@@ -95,74 +89,44 @@ def get_valid_moves(brd):
 
 
 def solve(brd):
-	valid_moves = get_valid_moves(brd)
-	limit = len(valid_moves)
-	counter = 0;
-	hash_table = dict()
-	hashed_state = ""
-	moves_list = list()
-	dummy = 0
-	flag = False
-	print datetime.datetime.now().time()
-	# brd.play_move(Move(9,16,23))
-	# brd.play_move(Move(14,15,16))
-	# brd.play_move(Move(23,16,9))
-	# brd.play_move(Move(2,9,16))
-	# brd.play_move(Move(16,17,18))
-	# brd.play_move(Move(4,3,2))
-	# brd.play_move(Move(19,18,17))
-	# brd.play_move(Move(17,10,3))
-	# brd.play_move(Move(2,3,4))
+	"""
+	Finds a solution for a board if exists, return false if it doesn't.
+	In case the move is a dead end, the state will go into a hash table
+	to skip identical cases.
+	"""
+	valid_moves = get_valid_moves(brd)  #Holds the valid moves for the current turn
+	limit = len(valid_moves)			#The upper bound for the while loop
+	counter = 0;						#Index of the current move
+	hash_table = dict()					#Hash table for faster processing
+	hashed_state = ""					#The hashed state
+	moves_list = list()					#The moves which will provide solution
+	
+	
 
-	# print str(brd)
-	# print final_state(brd)
-
-	while counter <= limit:# or len(moves_list)!=0:
-		if dummy % 1000==0:
-			print dummy
+	while counter <= limit:
 		valid_moves = get_valid_moves(brd)
-		print "BOARD STATE {d}\nCOUNTER: {c}".format(d=dummy, c=counter)
-		print str(brd)
-		print "VALID MOVES:"
-		print_valid_moves(valid_moves)
-		dummy+=1
-		# if dummy % 100 == 0:
-		# 	pdb.set_trace()
+		
+		#Case we found a solution
 		if get_num_of_pegs(brd, 1):
-			print "YYYYYEEEEEESSSSS"
-			print datetime.datetime.now().time()
-			print len(hash_table)
-			print len(moves_list)
-			return True
+			print "FOUND SOLUTION!"
+			return moves_list
 
-
-		# if counter >= len(valid_moves)-1:
-
-
-
-		#CASE WE HAVE VALID MOVES
+		#Case valid moves exists
 		if len(valid_moves) != 0 and counter < len(valid_moves):	
 			next_move = valid_moves[counter]
-
 			
 			hashed_state = hash(brd, next_move)
 
-			# if not brd.valid_move(next_move):
-				# counter += 1
-			# if get_num_of_pegs(brd, 2) and brd.valid_move(next_move):
-			# 	pdb.set_trace()
-			# 	brd.play_move(next_move)
-			# 	moves_list.append(next_move)
-			# 	counter = 0
-			#CASE THE BOARD AND MOVE COMBINATION IS NOT A DEAD END
+			#Case the board and move combination is not a dead end
 			if not hash_table.has_key(hashed_state):
-				#CASE THE MOVE IS VALID
+
+				#Valid move- play the move
 				if brd.valid_move(next_move):
 					brd.play_move(next_move)
 					moves_list.append(next_move)
 					counter = 0
 				
-				#CASE THE MOVE IS NOT VALID
+				#Invalid move- insert board and move comination to hash table
 				else:
 					last_move = moves_list.pop()
 					brd.undo_move(last_move)
@@ -170,112 +134,55 @@ def solve(brd):
 					hash_table[hashed_state]=""
 					temp_valid_moves = get_valid_moves(brd)
 					counter = set_counter(get_valid_moves(brd), last_move)
-					# for move in temp_valid_moves:
-						# if str(move) == str(temp_move):
-							# counter = temp_valid_moves.index(move)+1
 
 
+			#Case board and move combination exists in the hash table
 			else:
-				#CASE WE HAVE MOVES IN THE MOVES_LIST- BACKTRACK
-				# if len(moves_list) != 0:
-				if get_num_of_pegs(brd, 2) and brd.valid_move(next_move):
-					pdb.set_trace()
-					brd.play_move(next_move)
-					moves_list.append(next_move)
-					counter = 0
-				else:	
-					last_move = moves_list.pop()
-					brd.undo_move(last_move)
-					hashed_state = hash(brd, last_move)
-					hash_table[hashed_state]=""
-					# temp_valid_moves = get_valid_moves(brd)
-					counter = set_counter(get_valid_moves(brd), last_move)
-					# for move in temp_valid_moves:
-						# if str(move) == str(last_move):
-							# counter = temp_valid_moves.index(move)+1
-
+				#Backtrack
+				last_move = moves_list.pop()
+				brd.undo_move(last_move)
+				hashed_state = hash(brd, last_move)
+				hash_table[hashed_state]=""
+				counter = set_counter(get_valid_moves(brd), last_move)
 
 
 		else:
-			#CASE WE HAVE MOVES IN THE MOVES_LIST- BACKTRACK
+			#Backtrack if we valid moves doesn't exist
+
+			#Backtrack if possible
 			if len(moves_list) != 0:
 				last_move = moves_list.pop()
 				brd.undo_move(last_move)
 				hashed_state = hash(brd, last_move)
 				hash_table[hashed_state]=""
-				# temp_valid_moves = get_valid_moves(brd)
+				
 				if temp_valid_moves !=  None:
 					counter = set_counter(get_valid_moves(brd), last_move)
-					# for move in temp_valid_moves:
-							# if str(move) == str(last_move):
-								# counter = temp_valid_moves.index(move)+1
+				
 				else:
 					counter = set_counter(get_valid_moves(brd), last_move)
-					# for move in valid_moves:
-							# if str(move) == str(last_move):
-								# counter = valid_moves.index(move)+1
+			
+			#Increment counter if backtrack is not possible
 			else:
 				counter = set_counter(get_valid_moves(brd), last_move)
-				# for move in valid_moves:
-							# if str(move) == str(last_move):
-								# counter = valid_moves.index(move)+1
+				
 
-
-	
-
-		print "CHOSEN MOVE: {m}\n".format(m=str(next_move))
-		print "MOVES LIST: {a}\nHASH_TABLE: {b}\nVALID MOVES: {c}".format(a=len(moves_list), b=len(hash_table), c=len(valid_moves))
-		print "MOVES LIST:"
-		output=""
-		for x in moves_list:
-			output+=str(x) + "  "
-		print output
-		print "---------------------------------------------------------------"
+		#Reset variables
 		next_move = None
 		temp_valid_moves = None
 
 	print "NO SOUTION FOUND"
+	return False
 
 
 		
 def set_counter(moves_list, move):
+	"""
+	Sets the counter to the correct value after backtracking
+	"""
 	for element in moves_list:
 		if str(element) == str(move):
 			return moves_list.index(move)+1
-
-
-
-
-
-
-
-def print_valid_moves(l):
-	for x in l:
-		print str(x)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Move(object):
@@ -306,6 +213,9 @@ class Move(object):
 			return True
 		return False
 
+	def __repr__(self):
+		return "({s1}, {s2}, {s3})".format(s1=self.s1, s2=self.s2, s3=self.s3)
+
 class Board(object):
 	"""
 	This class represents a peg solitare board.
@@ -333,13 +243,13 @@ class Board(object):
 		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
 
 		"""(2 3 4 9 10 14 15 16 17 19)"""
-		# self.grid.append([-1, -1, 1, 1, 1, -1, -1])
-		# self.grid.append([-1, -1, 1, 1, 0, -1, -1])
-		# self.grid.append([1, 1, 1, 1, 0, 1, 0])
-		# self.grid.append([0, 0, 0, 0, 0, 0, 0])
-		# self.grid.append([0, 0, 0, 0, 0, 0, 0])
-		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
-		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		self.grid.append([-1, -1, 1, 1, 1, -1, -1])
+		self.grid.append([-1, -1, 1, 1, 0, -1, -1])
+		self.grid.append([1, 1, 1, 1, 0, 1, 0])
+		self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
 
 		"""(3 4 9 15 16 17 19 20 22 23 25 26 27 30 31 33 34 38 45 46)"""
 		# self.grid.append([-1, -1, 0, 1, 1, -1, -1])
@@ -361,13 +271,13 @@ class Board(object):
 		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
 
 		"""2 3 4 9 10 14 15 16 17 19 20 21 NO SOLUTION"""
-		self.grid.append([-1, -1, 1, 1, 1, -1, -1])
-		self.grid.append([-1, -1, 1, 1, 0, -1, -1])
-		self.grid.append([1, 1, 1, 1, 0, 1, 1])
-		self.grid.append([1, 0, 0, 0, 0, 0, 0])
-		self.grid.append([0, 0, 0, 0, 0, 0, 0])
-		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
-		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		# self.grid.append([-1, -1, 1, 1, 1, -1, -1])
+		# self.grid.append([-1, -1, 1, 1, 0, -1, -1])
+		# self.grid.append([1, 1, 1, 1, 0, 1, 1])
+		# self.grid.append([1, 0, 0, 0, 0, 0, 0])
+		# self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
 				
 
 
@@ -408,6 +318,10 @@ class Board(object):
 
 	
 	def valid_move(self, mv):
+		"""
+		Returns true if a move is valid based on the current state
+		or false otherwise
+		"""
 		#Get the move position route
 		i_start = mv.s1 / self.length
 		j_start = mv.s1 - (i_start * self.width)
@@ -442,6 +356,7 @@ class Board(object):
 		j_end = mv.s3 - (i_end * self.width)
 
 		if self.valid_move(mv):
+
 			#perform move
 			self.grid[i_start][j_start] = 0
 			self.grid[i_middle][j_middle] = 0
@@ -451,6 +366,9 @@ class Board(object):
 		return False
 
 	def undo_move(self, mv):
+		"""
+		Undo a move and return the board to the previous state
+		"""
 		#Get the move position route
 		i_start = mv.s1 / self.length
 		j_start = mv.s1 - (i_start * self.width)
