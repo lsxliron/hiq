@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>
+		HI Q Game
+	</title>
+
+	<link rel="stylesheet" href="{{url_for('static',filename='css/styles.css') }}")>
+	<script src="{{ url_for('static', filename='jQuery/jquery-1.11.0.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='scripts/scripts.js')}}" type="text/javascript"></script>
+	
+</head>
+
+<body>
+
+	<div class="container">
+		<img src="{{url_for('static', filename='img/grid.jpg')}}" class="grid">	
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p2" class="peg" style="top:30px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p3" class="peg" style="top:30px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p4" class="peg" style="top:30px; left:695px;">		
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p9" class="peg" style="top:135px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p10" class="peg" style="top:135px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p11" class="peg" style="top:135px; left:695px;">		
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p14" class="peg" style="top:240px; left:275px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p15" class="peg" style="top:240px; left:380px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p16" class="peg" style="top:240px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p17" class="peg" style="top:240px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p18" class="peg" style="top:240px; left:695px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p19" class="peg" style="top:240px; left:800px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p20" class="peg" style="top:240px; left:905px;">
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p21" class="peg" style="top:345px; left:275px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p22" class="peg" style="top:345px; left:380px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p23" class="peg" style="top:345px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p24" class="peg" style="top:345px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p25" class="peg" style="top:345px; left:695px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p26" class="peg" style="top:345px; left:800px;">		
+		 <img src="{{url_for('static', filename='img/peg.png')}}" id="p27" class="peg" style="top:345px; left:905px;">
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p28" class="peg" style="top:450px; left:275px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p29" class="peg" style="top:450px; left:380px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p30" class="peg" style="top:450px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p31" class="peg" style="top:450px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p32" class="peg" style="top:450px; left:695px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p33" class="peg" style="top:450px; left:800px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p34" class="peg" style="top:450px; left:905px;">
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p37" class="peg" style="top:555px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p38" class="peg" style="top:555px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p39" class="peg" style="top:555px; left:695px;">		
+
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p44" class="peg" style="top:660px; left:485px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p45" class="peg" style="top:660px; left:590px;">		
+		<img src="{{url_for('static', filename='img/peg.png')}}" id="p46" class="peg" style="top:660px; left:695px;">	
+
+	</div>
+	<form id="findSolution" method="POST">
+		<input type="submit" class="submit">Find Soultion</button>
+		<input type="text" id="array">
+		<label id="boardState">  </label>
+
+
+	</form>
+
+</body>
+
+</html>

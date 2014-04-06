@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>
+		TEST
+	</title>
+		<style type="text/css">
+		.grid
+		{
+			display: block;
+		    margin-left: auto;
+		    margin-right: auto;
+		    position: relative;
+		    z-index: 1;
+		    /*height: 5%;*/
+		    /*width: 5%;*/
+		}
+
+		.container
+		{
+			position: relative;
+			/*z-index: -50*/
+			
+		}
+		.peg
+		{
+			margin-left: auto;
+		    margin-right: auto;
+			
+			z-index: 2;
+			position: absolute;
+		}
+
+		.submit
+		{
+			display: block;
+			margin-left: auto;
+		    margin-right: auto;
+		    position: relative;
+		    width: 200px;
+		    height: 80px;
+		    font-size: x-large
+		}
+
+		</style>
+
+
+	<script src="jquery-1.11.0.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<img src="grid.jpg" class="grid">	
+		<img src="peg.png" id="2" class="peg" style="top:30px; left:485px;">		
+		<img src="peg.png" id="3" class="peg" style="top:30px; left:590px;">		
+		<img src="peg.png" id="4" class="peg" style="top:30px; left:695px;">		
+
+		<img src="peg.png" id="9" class="peg" style="top:135px; left:485px;">		
+		<img src="peg.png" id="10" class="peg" style="top:135px; left:590px;">		
+		<img src="peg.png" id="11" class="peg" style="top:135px; left:695px;">		
+
+		<img src="peg.png" id="14" class="peg" style="top:240px; left:275px;">		
+		<img src="peg.png" id="15" class="peg" style="top:240px; left:380px;">		
+		<img src="peg.png" id="16" class="peg" style="top:240px; left:485px;">		
+		<img src="peg.png" id="17" class="peg" style="top:240px; left:590px;">		
+		<img src="peg.png" id="18" class="peg" style="top:240px; left:695px;">		
+		<img src="peg.png" id="19" class="peg" style="top:240px; left:800px;">		
+		<img src="peg.png" id="20" class="peg" style="top:240px; left:905px;">
+
+		<img src="peg.png" id="21" class="peg" style="top:345px; left:275px;">		
+		<img src="peg.png" id="22" class="peg" style="top:345px; left:380px;">		
+		<img src="peg.png" id="23" class="peg" style="top:345px; left:485px;">		
+		<img src="peg.png" id="24" class="peg" style="top:345px; left:590px;">		
+		<img src="peg.png" id="25" class="peg" style="top:345px; left:695px;">		
+		<img src="peg.png" id="26" class="peg" style="top:345px; left:800px;">		
+		<img src="peg.png" id="27" class="peg" style="top:345px; left:905px;">
+
+		<img src="peg.png" id="28" class="peg" style="top:450px; left:275px;">		
+		<img src="peg.png" id="39" class="peg" style="top:450px; left:380px;">		
+		<img src="peg.png" id="30" class="peg" style="top:450px; left:485px;">		
+		<img src="peg.png" id="31" class="peg" style="top:450px; left:590px;">		
+		<img src="peg.png" id="32" class="peg" style="top:450px; left:695px;">		
+		<img src="peg.png" id="33" class="peg" style="top:450px; left:800px;">		
+		<img src="peg.png" id="34" class="peg" style="top:450px; left:905px;">
+
+		<img src="peg.png" id="37" class="peg" style="top:555px; left:485px;">		
+		<img src="peg.png" id="38" class="peg" style="top:555px; left:590px;">		
+		<img src="peg.png" id="39" class="peg" style="top:555px; left:695px;">		
+
+		<img src="peg.png" id="44" class="peg" style="top:660px; left:485px;">		
+		<img src="peg.png" id="45" class="peg" style="top:660px; left:590px;">		
+		<img src="peg.png" id="46" class="peg" style="top:660px; left:695px;">	
+
+	</div>
+
+	<button type="submit" class="submit">Find Soultion</button>
+
+
+
+
+<script>
+$(document).ready(function()
+{
+	var cord = {x: -1, y:-1};
+		$(document).mousemove(function(event){
+			cord.x=event.pageX;
+			cord.y=event.pageY;
+			// console.log("(" + cord.x + ", " + cord.y + ")");
+			// console.log("<img src='peg.png' class='peg' style='left:" + cord.x+"; top:"+cord.y+";'/>");
+
+		});
+
+	$(".peg").click(function(){
+		// for (var i = 30; i<100; i++)
+		// {
+			// $(this).css("top", i);
+			// $(this).animate({left: "+=105"},1000)
+			$(this).fadeOut("slow")
+			console.log($("#1").is(":visible"));
+
+		// }
+
+	});
+
+	$(".grid").click(function(){
+		// alert("HI");
+
+		
+
+
+		// $(".container").append("<img src='peg.png' class='peg' style='left:" + (parseInt(cord.x)-50).toString() + "px; top:"+(parseInt(cord.y)-50).toString()+"px'/>");
+	});
+
+
+	$(".submit").click(function(){
+		board_state=[];
+		for (var i=0; i<46; i++)
+		{
+			if ($("#"+i.toString()).length>0)
+			{
+				console.log("Y")
+				if ($("#"+i.toString()).is(":visible"))
+				
+					board_state.push(1);
+				else
+					board_state.push(0);
+			}
+			else
+				board_state.push(-1);			
+		}
+		console.log(board_state);
+
+	});
+	
+});
+</script>
+
+</body>
+
+</html>

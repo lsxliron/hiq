@@ -2,15 +2,15 @@ import pdb
 from hashlib import md5
 import sys
 from termcolor import colored
-import datetime
+import datetime, pdb
 
 
 def main():
 	b = Board(7,7)
 	print str(b)	
 	moves_list = solve(b)
-	for item in moves_list:
-		print item
+	# for item in moves_list:
+		# print item
 
 
 def get_list_of_possible_moves(board):
@@ -100,11 +100,15 @@ def solve(brd):
 	hash_table = dict()					#Hash table for faster processing
 	hashed_state = ""					#The hashed state
 	moves_list = list()					#The moves which will provide solution
-	
-	
+	last_counter = -1
+	las_valid_moves = None
 
-	while counter <= limit:
+	# while counter <= limit+100:
+	while str(las_valid_moves) != valid_moves and counter<100:
 		valid_moves = get_valid_moves(brd)
+		las_valid_moves = get_valid_moves(brd)
+
+
 		
 		#Case we found a solution
 		if get_num_of_pegs(brd, 1):
@@ -164,12 +168,17 @@ def solve(brd):
 			
 			#Increment counter if backtrack is not possible
 			else:
-				counter = set_counter(get_valid_moves(brd), last_move)
-				
+				# pdb.set_trace()
+				# counter = set_counter(get_valid_moves(brd), last_move)
+				counter += 1
+		
 
 		#Reset variables
 		next_move = None
 		temp_valid_moves = None
+
+
+		print len(valid_moves)
 
 	print "NO SOUTION FOUND"
 	return False
@@ -231,7 +240,7 @@ class Board(object):
 		self.length = length
 		self.width = width
 		self.grid= list()
-		#Generate grid
+		# Generate grid
 		# for i in range(0,2):
 		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
 
