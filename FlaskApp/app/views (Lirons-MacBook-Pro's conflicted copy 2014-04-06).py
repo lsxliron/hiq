@@ -21,23 +21,17 @@ def get_moves_for_solution():
 	
 	for position in init_state:
 		position_list.append(int(position))
-	print "PROCESSING SOLUTION"
+	print position_list
 	brd = Board(position_list)
 	
 	moves = solve(brd)
-	# moves.reverse()
+
 	print moves
-	
-	
-	
+
 
 	
-
-	if len(moves) != 0:
-		temp = "".join(str(moves)).strip('[]')
-		temp = temp.replace('(','')
-		temp = temp.replace(')','')
-		return temp
-
-	else:
-		return ""
+	 
+	temp = "".join(str(moves)).strip('[]')
+	temp = temp.replace('(','')
+	temp = temp.replace(')','')
+	return temp
