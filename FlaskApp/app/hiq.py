@@ -118,7 +118,7 @@ def solve(brd):
 					moves_list.append(next_move)
 					counter = 0
 				
-				#Invalid move- insert board and move comination to hash table
+				#Invalid move- insert board and move combination to hash table
 				else:
 					last_move = moves_list.pop()
 					brd.undo_move(last_move)
