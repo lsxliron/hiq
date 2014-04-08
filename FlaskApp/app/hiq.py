@@ -95,7 +95,7 @@ def solve(brd):
 	moves_list = list()					#The moves which will provide solution
 	last_move=None
 
-	while counter <= limit+100:
+	while counter <= limit:
 		valid_moves = get_valid_moves(brd)
 		
 		#Case we found a solution
@@ -156,8 +156,8 @@ def solve(brd):
 			
 			#Increment counter if backtrack is not possible
 			else:
-				counter = set_counter(get_valid_moves(brd), last_move)
-				# counter += 1
+				# counter = set_counter(get_valid_moves(brd), last_move)
+				counter += 1
 			
 
 				

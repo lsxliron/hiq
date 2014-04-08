@@ -1,101 +1,110 @@
 $(document).ready(function()
 {
+	
+	$(".inner #ex1").click(function(e)
+	{
+		e.preventDefault()
+		$(".peg").show();
+		// Board 1
+		$("#p11").hide();
+		$("#p18").hide();
+		$("#p20").hide();
+		$("#p21").hide();
+		$("#p22").hide();
+		$("#p23").hide();
+		$("#p24").hide();
+		$("#p25").hide();
+		$("#p26").hide();
+		$("#p27").hide();
+		$("#p28").hide();
+		$("#p29").hide();
+		$("#p30").hide();
+		$("#p31").hide();
+		$("#p32").hide();
+		$("#p33").hide();
+		$("#p34").hide();
+		$("#p37").hide();
+		$("#p38").hide();
+		$("#p39").hide();
+		$("#p44").hide();
+		$("#p45").hide();
+		$("#p46").hide();
+		return;
+	});
 
-var $peg = $('.peg');
-$peg.append('<span>' + $peg.attr('id') + '</span>');
+	
+	$(".inner #ex2").click(function(e)
+	{
+		e.preventDefault()
+		$(".peg").show();
+		
+		// Board 2
+		$("#p2").hide();
+		$("#p3").hide();
+		$("#p4").hide();
+		$("#p10").hide();
+		$("#p11").hide();
+		$("#p12").hide();
+		$("#p14").hide();
+		$("#p15").hide();
+		$("#p16").hide();
+		$("#p17").hide();
+		$("#p20").hide();
+		$("#p21").hide();
+		$("#p22").hide();
+		$("#p23").hide();
+		$("#p24").hide();
+		$("#p25").hide();
+		$("#p26").hide();
+		$("#p27").hide();
+		$("#p28").hide();
+		$("#p31").hide();
+		$("#p32").hide();
+		$("#p33").hide();
+		$("#p34").hide();
+		$("#p35").hide();
+		$("#p36").hide();
+		$("#p37").hide();
+		$("#p39").hide();
+		$("#p44").hide();
+		$("#p45").hide();
+		$("#p46").hide();
+		return;
+	});
 
-
-// $("#p9").animate({marginTop	: "+=210px"}, {duration: 1000, queue: "global"});
-// $("#p16").fadeOut({duration: 1000, queue: "global"});
-// $.fxqueue("global").start();	
-	// console.log($.fxqueue("global").length)
-	var queue = $(".grid").queue("global")
+	$(".inner #ex3").click(function(e)
+	{
+		e.preventDefault();
+		$(".peg").show();
+		//Board 3
+		$("#p2").hide();
+		$("#p10").hide();
+		$("#p11").hide();
+		$("#p12").hide();
+		$("#p14").hide();
+		$("#p18").hide();
+		$("#p21").hide();
+		$("#p24").hide();
+		$("#p28").hide();
+		$("#p29").hide();
+		$("#p32").hide();
+		$("#p35").hide();
+		$("#p36").hide();
+		$("#p37").hide();
+		$("#p39").hide();
+		$("#p44").hide();
+		return;
+	});
 	
 
-	// $("#p11").hide()
-	// $("#p18").hide()
-	// $("#p20").hide()
-	// $("#p21").hide()
-	// $("#p22").hide()
-	// $("#p23").hide()
-	// $("#p24").hide()
-	// $("#p25").hide()
-	// $("#p26").hide()
-	// $("#p27").hide()
-	// $("#p28").hide()
-	// $("#p29").hide()
-	// $("#p30").hide()
-	// $("#p31").hide()
-	// $("#p32").hide()
-	// $("#p33").hide()
-	// $("#p34").hide()
-	// $("#p37").hide()
-	// $("#p38").hide()
-	// $("#p39").hide()
-	// $("#p44").hide()
-	// $("#p45").hide()
-	// $("#p46").hide()
+	//Hide the loading GIF
+	$("#loadingGIF").hide()
 
-	// $("#p2").hide()
-	// $("#p3").hide()
-	// $("#p4").hide()
-	// $("#p10").hide()
-	// $("#p11").hide()
-	// $("#p12").hide()
-	// $("#p14").hide()
-	// $("#p15").hide()
-	// $("#p16").hide()
-	// $("#p17").hide()
-	// $("#p20").hide()
-	// $("#p21").hide()
-	// $("#p22").hide()
-	// $("#p23").hide()
-	// $("#p24").hide()
-	// $("#p25").hide()
-	// $("#p26").hide()
-	// $("#p27").hide()
-	// $("#p28").hide()
-	// $("#p31").hide()
-	// $("#p32").hide()
-	// $("#p33").hide()
-	// $("#p34").hide()
-	// $("#p35").hide()
-	// $("#p36").hide()
-	// $("#p37").hide()
-	// $("#p39").hide()
-	// $("#p44").hide()
-	// $("#p45").hide()
-	// $("#p46").hide()
-
-	$("#p2").hide()
-	$("#p10").hide()
-	$("#p11").hide()
-	$("#p12").hide()
-	$("#p14").hide()
-	$("#p18").hide()
-	$("#p21").hide()
-	$("#p24").hide()
-	$("#p28").hide()
-	$("#p29").hide()
-	$("#p32").hide()
-	$("#p35").hide()
-	$("#p36").hide()
-	$("#p37").hide()
-	$("#p39").hide()
-	$("#p44").hide()
 	
-
-
-
-
-
-
-
 	//Remove pegs from the board when clicked
 	$(".peg").click(function()
 	{
-			$(this).fadeOut("slow")
-			console.log($(this).attr('id'));
+			$(this).fadeOut("slow");
 	});
 
 	
@@ -104,28 +113,34 @@ $peg.append('<span>' + $peg.attr('id') + '</span>');
 	$(".submit").click(function(e)
 	{
 		e.preventDefault();
-		var board = prepareBoardState()	
+		var board = prepareBoardState();
 
+		$("#loadingGIF").show();
 		$.ajax(
 		{
 			url:'/_find_solution/',
 			method:'POST',
 			data: {initialBoard: board},
-
+			
+			
 			success: function(data)
 			{
+				$("#loadingGIF").hide()
 				if (data!="")
 				{
 					res=data.split(',');
-					arr = convert_to_int_array(res)
-					// animate_solution(arr)
-					pause(false,arr)
-				        
+					arr = convert_to_int_array(res);
+					animate_solution(false,arr);
 				}
 
 				else
 				{
+					$(".peg").animate({opacity: 0.25}, {duration: 200})
+					$(".grid").animate({opacity: 0.25}, {duration: 200})
+					$("loadingGIF").remove();
+					$("#message").append("No solution found...");
 					console.log("NO SOLUTION FOUND")
+
 
 				}
 
@@ -164,98 +179,24 @@ function convert_to_int_array(str)
 }
 
 
-//Animates the steps for the solution
-// function animate_solution(move)
-// {
-// 	for (var i=0; i<move.length-2; i=i+3)
-// 	{
-// 		var s1=move[i];
-// 		var s2=move[i+1];
-// 		var s3=move[i+2];
-// 		var hiddenID = 100
-
-// 		s1 = s1.replace(/\s+/g, '');
-// 		s2 = s2.replace(/\s+/g, '');
-// 		s3 = s3.replace(/\s+/g, '');
-		
-// 		//Check which direction to move
-// 		//Move right
-// 		if (s1-s2 == -1)
-// 		{
-// 			$("#p"+s1).animate({marginLeft: "+=210px"}, {duration: 50, queue: "global"});
-// 			$("#p"+s2).fadeOut({duration: 1000, queue: "global"});
-
-// 			$("#p"+s2).attr('id',"p"+hiddenID)
-// 			$("#p"+s1).attr('id',"p"+s3.toString())
-			
-// 		}
-
-// 		//Move left
-// 		else if (s1-s2 == 1)
-// 		{
-// 			$("#p"+s1).animate({marginLeft: "-=210px"}, {duration: 50, queue: "global"});
-// 			$("#p"+s2).fadeOut({duration: 1000, queue: "global"});
-
-// 			$("#p"+s2).attr('id',hiddenID)
-// 			$("#p"+s1).attr('id',"p"+s3.toString())
-			
-// 		}
-
-// 		//Move down
-// 		else if (s1-s2 < 0)
-// 		{
-
-// 			$("#p"+s1).animate({marginTop: "+=210px"}, {duration: 50, queue: "global"});
-// 			$("#p"+s2).fadeOut({duration: 1000, queue: "global"});
-
-// 			$("#p"+s2).attr('id',hiddenID)
-// 			$("#p"+s1).attr('id',"p"+s3.toString())
-			
-// 		}
-		
-// 		//Move up
-// 		else
-// 		{
-// 			console.log("up");
-// 			console.log("Moving "+ s1 + "to " +s3)
-// 			console.log(s2 + "disappeard")
-			
-			
-// 			$("#p"+s1).animate({marginTop: "-=210px"}, {duration: 50, queue: "global"});
-// 			$("#p"+s2).fadeOut({duration: 1000, queue: "global"});
-	
-
-// 			$("#p"+s2).attr('id',hiddenID)
-// 			$("#p"+s1).attr('id',"p"+s3.toString());
-			
-// 		}
-
-// 		hiddenID=hiddenID +10
-// 	}
-	
-	
-// 	$.fxqueue("global").start();
-	
-	
-	
-	
-// }
-
-function animate_solution(move)
+//This function animates one step at a time
+function animate_solution_helper(move)
 {
 
-	var time = 100;
-	var i=0
-	var s1=move[i];
-	var s2=move[i+1];
-	var s3=move[i+2];
+	var time = 100;		//Time to delay animation
+	var i=0				//Index variable
+	var s1=move[i];		//First coordinate of the move
+	var s2=move[i+1];	//Second coordinate of the move
+	var s3=move[i+2];	//Third coordinate of the move
 	
 
+	//Remove spaces from the move string
 	s1 = s1.replace(/\s+/g, '');
 	s2 = s2.replace(/\s+/g, '');
 	s3 = s3.replace(/\s+/g, '');
 	
 	//Check which direction to move
+	
 	//Move right
 	if (s1-s2 == -1)
 	{
@@ -289,45 +230,48 @@ function animate_solution(move)
 		$("#p"+s3).delay(time).animate({marginTop: "+=210px"}, {duration: 1000});
 	}
 	
+	//Reset variables
 	s1="";
 	s2="";
 	s3="";
 }
 
-function pause(flag, moves)
-{
-	if (flag)
-	{
-		console.log("OUT")
-		return
-	}
-		
+//This function gets an array of moves and performs one move at a time.
+//This function exists to animates move sequentaly
+function animate_solution(flag, moves)
+{		
+	//Executes one move at a time every 2 seconds	
 	setTimeout(function()
 	{
-		var tempID;
-		var oneMove = [];
+		var tempID;			//variable to hold a peg ID
+		var oneMove = [];	//The move to perform
 		
+		//Fetch one move
 		oneMove.push(moves[0].replace(/\s+/g, ''));
 		oneMove.push(moves[1].replace(/\s+/g, ''));
 		oneMove.push(moves[2].replace(/\s+/g, ''));
 		
-
-		animate_solution(oneMove);
+		//Animate the move
+		animate_solution_helper(oneMove);
 		
+		//Swap pegs ID
 		tempID = "p"+oneMove[2];
 
-
+		//Remove unecessary pegs
 		$("#p"+oneMove[2]).remove()
 		$("#p"+oneMove[0]).attr('id',tempID)
 
+		//Pop the move that was performed
 		moves.shift();
 		moves.shift();
 		moves.shift();
-	
+		
+		// Return when there are no more moves to perform
 		if (oneMove.length == 0)
 			return
+		//Else perform the next move
 		else
-			pause(false, moves)
+			animate_solution(false, moves)
 
 	},2000);
 }
