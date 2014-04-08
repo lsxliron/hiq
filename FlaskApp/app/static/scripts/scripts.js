@@ -100,7 +100,7 @@ $(document).ready(function()
 	//Hide the loading GIF
 	$("#loadingGIF").hide()
 
-	
+
 	//Remove pegs from the board when clicked
 	$(".peg").click(function()
 	{
@@ -200,34 +200,34 @@ function animate_solution_helper(move)
 	//Move right
 	if (s1-s2 == -1)
 	{
-		$("#p"+s1).delay(time).animate({marginLeft: "+=210px"}, {duration: 1000});
+		$("#p"+s1).delay(time).animate({marginLeft: "+=134px"}, {duration: 1000});
 		$("#p"+s2).delay(time+1000).fadeOut({duration: 1000}, function(){$(this).remove()});
-		$("#p"+s3).delay(time).animate({marginLeft: "-=210px"}, {duration: 1000});
+		$("#p"+s3).delay(time).animate({marginLeft: "-=134px"}, {duration: 1000});
 	}
 
 	//Move left
 	else if (s1-s2 == 1)
 	{
-		$("#p"+s1).delay(time).animate({marginLeft: "-=210px"}, {duration: 1000});
+		$("#p"+s1).delay(time).animate({marginLeft: "-=134px"}, {duration: 1000});
 		$("#p"+s2).delay(time+1000).fadeOut({duration: 1000}, function(){$(this).remove()});
-		$("#p"+s3).delay(time).animate({marginLeft: "+=210px"}, {duration: 1000});
+		$("#p"+s3).delay(time).animate({marginLeft: "+=134px"}, {duration: 1000});
 	}
 
 	//Move down
 	else if (s1-s2 < 0)
 	{
 
-		$("#p"+s1).delay(time).animate({marginTop: "+=210px"}, {duration: 1000});
+		$("#p"+s1).delay(time).animate({marginTop: "+=134px"}, {duration: 1000});
 		$("#p"+s2).delay(time+1000).fadeOut({duration: 1000}, function(){$(this).remove()});
-		$("#p"+s3).delay(time).animate({marginTop: "-=210px"}, {duration: 1000});
+		$("#p"+s3).delay(time).animate({marginTop: "-=134px"}, {duration: 1000});
 	}
 	
 	//Move up
 	else
 	{
-		$("#p"+s1).delay(time).animate({marginTop: "-=210px"}, {duration: 1000});
+		$("#p"+s1).delay(time).animate({marginTop: "-=134px"}, {duration: 1000});
 		$("#p"+s2).delay(time+1000).fadeOut({duration: 1000}, function(){$(this).remove()});
-		$("#p"+s3).delay(time).animate({marginTop: "+=210px"}, {duration: 1000});
+		$("#p"+s3).delay(time).animate({marginTop: "+=134px"}, {duration: 1000});
 	}
 	
 	//Reset variables
