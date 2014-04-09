@@ -241,24 +241,24 @@ class Board(object):
 		self.width = width
 		self.grid= list()
 		# Generate grid
-		# for i in range(0,2):
-		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
+		for i in range(0,2):
+			self.grid.append([-1,-1, 1, 1, 1, -1, -1])
 
-		# self.grid.append([1, 1, 1, 1, 1, 1, 1])
-		# self.grid.append([1, 1, 1, 0, 1, 1, 1])
-		# self.grid.append([1, 1, 1, 1, 1, 1, 1])
+		self.grid.append([1, 1, 1, 1, 1, 1, 1])
+		self.grid.append([1, 1, 1, 0, 1, 1, 1])
+		self.grid.append([1, 1, 1, 1, 1, 1, 1])
 
-		# for i in range(0,2):
-		# 	self.grid.append([-1,-1, 1, 1, 1, -1, -1])
+		for i in range(0,2):
+			self.grid.append([-1,-1, 1, 1, 1, -1, -1])
 
 		"""(2 3 4 9 10 14 15 16 17 19)"""
-		self.grid.append([-1, -1, 1, 1, 1, -1, -1])
-		self.grid.append([-1, -1, 1, 1, 0, -1, -1])
-		self.grid.append([1, 1, 1, 1, 0, 1, 0])
-		self.grid.append([0, 0, 0, 0, 0, 0, 0])
-		self.grid.append([0, 0, 0, 0, 0, 0, 0])
-		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
-		self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		# self.grid.append([-1, -1, 1, 1, 1, -1, -1])
+		# self.grid.append([-1, -1, 1, 1, 0, -1, -1])
+		# self.grid.append([1, 1, 1, 1, 0, 1, 0])
+		# self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		# self.grid.append([0, 0, 0, 0, 0, 0, 0])
+		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
+		# self.grid.append([-1, -1, 0, 0, 0, -1, -1])
 
 		"""(3 4 9 15 16 17 19 20 22 23 25 26 27 30 31 33 34 38 45 46)"""
 		# self.grid.append([-1, -1, 0, 1, 1, -1, -1])

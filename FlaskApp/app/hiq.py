@@ -94,9 +94,12 @@ def solve(brd):
 	hashed_state = ""					#The hashed state
 	moves_list = list()					#The moves which will provide solution
 	last_move=None
+	las_valid_moves = None
 
-	while counter <= limit:
+	# while counter <= limit and counter<=76:
+	while str(las_valid_moves) != valid_moves and counter<100:
 		valid_moves = get_valid_moves(brd)
+		las_valid_moves = get_valid_moves(brd)
 		
 		#Case we found a solution
 		if get_num_of_pegs(brd, 1):
@@ -158,6 +161,7 @@ def solve(brd):
 			else:
 				# counter = set_counter(get_valid_moves(brd), last_move)
 				counter += 1
+
 			
 
 				
@@ -165,7 +169,7 @@ def solve(brd):
 		#Reset variables
 		next_move = None
 		temp_valid_moves = None
-
+		print moves_list
 	print "NO SOUTION FOUND"
 	return False
 
