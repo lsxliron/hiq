@@ -169,7 +169,6 @@ def solve(brd):
 		#Reset variables
 		next_move = None
 		temp_valid_moves = None
-		print moves_list
 	print "NO SOUTION FOUND"
 	return False
 
