@@ -1,8 +1,10 @@
 # HIQ (Peg Solitre) Solver #
+##Live Demo##
+You can find a live demo of this project at [http://hiqsolver-csc44800.rhcloud.com](http://hiqsolver-csc44800.rhcloud.com).
 
 ## About This Project##
-This web application was created as a project in AI course with another classmate.  
-You can find a live demo of this project at [http://hiqsolver-csc44800.rhcloud.com](http://hiqsolver-csc44800.rhcloud.com).
+This web application was created as a project in AI course with another classmate.
+
 
 This project is written in *python* and using the [Flask](http://flask.pocoo.org) framework.
 
